@@ -8,4 +8,4 @@
     <a href="mailto:roeebs123@gmail.com">Roee Ben Shlomo</a>
   </p>
 
-In this project we're predicting the prices of stock using various Deep Learning architectures.
+In this project we're predicting the prices of stocks using various Deep Learning architectures.
