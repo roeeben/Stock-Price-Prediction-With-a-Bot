@@ -3,57 +3,9 @@ import numpy as np
 from finta import TA
 import pandas as pd
 
-# def train_test_split_preparation(new_df, train_percentage, val_percentage, history_points):
-#     # Preparation of train test set.
-#     train_size = int(new_df.shape[0] * train_percentage)  # val size
-#     val_size = int(new_df.shape[0] * val_percentage)
-
-#     train_data = new_df[:train_size]
-#     val_data = new_df[train_size:train_size + val_size]
-#     test_data = new_df[train_size + val_size:]
-
-#     test_data = test_data.reset_index(drop=True)
-#     val_data = val_data.reset_index(drop=True)
-
-#     normalizer = preprocessing.MinMaxScaler()
-#     train_normalized_data = normalizer.fit_transform(train_data)
-
-#     test_normalized_data = normalizer.transform(test_data)
-#     val_normalized_data = normalizer.transform(val_data)
-
-
-#     X_train = np.array([train_normalized_data[:, 0:][i: i + history_points].copy() for i in
-#                         range(len(train_normalized_data) - history_points)])
-
-#     y_train = np.array([train_normalized_data[:, 0][i + history_points].copy() for i in
-#                         range(len(train_normalized_data) - history_points)])
-#     y_train = np.expand_dims(y_train, -1)
-
-#     y_normaliser = preprocessing.MinMaxScaler()
-#     next_day_close_values = np.array(
-#         [train_data['Close'][i + history_points].copy() for i in range(len(train_data) - history_points)])
-#     next_day_close_values = np.expand_dims(next_day_close_values, -1)
-
-#     y_normaliser.fit(next_day_close_values)
-
-#     X_test = np.array([test_normalized_data[:, 0:][i: i + history_points].copy() for i in
-#                        range(len(test_normalized_data) - history_points)])
-
-#     y_test = np.array([test_data['Close'][i + history_points].copy() for i in range(len(test_data) - history_points)])
-
-#     y_test = np.expand_dims(y_test, -1)
-
-#     X_val = np.array([val_normalized_data[:, 0:][i: i + history_points].copy() for i in
-#                        range(len(val_normalized_data) - history_points)])
-
-#     y_val = np.array([val_data['Close'][i + history_points].copy() for i in range(len(val_data) - history_points)])
-
-#     y_val = np.expand_dims(y_val, -1)
-
-#     return X_train, y_train, X_val, y_val, X_test, y_test, y_normaliser
 
 def train_test_split(new_df, train_percentage, val_percentage):
-    # Preparation of train test set.
+    # Preparation of train test and validation sets.
     train_size = int(new_df.shape[0] * train_percentage)  # val size
     val_size = int(new_df.shape[0] * val_percentage)
 
@@ -74,6 +26,7 @@ def train_test_split(new_df, train_percentage, val_percentage):
     test_normalized_data_x = normalizer.transform(test_data_x)
     val_normalized_data_x = normalizer.transform(val_data_x)
 
+    # we normalize by y and return it to use the inverse transformation to get actual prices from our predictions
     y_normalizer = preprocessing.MinMaxScaler()
     y_normalizer.fit(train_data_y)
     y_train_normalized_data = y_normalizer.transform(train_data_y)
