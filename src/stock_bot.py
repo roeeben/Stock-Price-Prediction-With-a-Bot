@@ -117,13 +117,13 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
 
 
     ax1.set_title('Money over time')
-    ax1.set_xlabel('Date')
+    ax1.set_xlabel('Minutes')
     ax1.set_ylabel('Net worth in $')
     ax1_text = ax1.text(0.3, 0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
     ax2.set_title('Stock over time')
     ax2.set_ylabel('Stock Value in $')
-    ax2.set_xlabel('Date')
+    ax2.set_xlabel('Minutes')
     ax2_text = ax2.text(0.3, -0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
     def update_money(i=int):
@@ -189,7 +189,7 @@ def outcome_of_transactions_plt(orig, pred, threshold_buy, threshold_sell, money
     plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
     plt.title('Outcome of each buying and selling Desicion')  # prints the title on the top
     plt.ylabel('Percent of positive/negative impact')  # labels y axis
-    plt.xlabel('Date')  # labels x axis
+    plt.xlabel('Minutes')  # labels x axis
     plt.legend()
     plt.show()
 
