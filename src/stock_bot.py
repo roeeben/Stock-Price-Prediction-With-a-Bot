@@ -88,8 +88,8 @@ def buying_and_selling_plt(orig, pred, threshold_buy, threshold_sell, money_star
     # plt.plot(orig['Date'].index, test_pred.values, label="Predicted test data")
     ax = orig.plot(x='Date', y='Price', label="Original test data")
     pred.plot(x='Date', y='Price', label="Predicted test data", ax= ax)
-    plt.scatter(buy_idx, buy_value * 0.95, color='green', marker='o', label="Buying Points")
-    plt.scatter(sell_idx, sell_value * 1.05, color='red', marker='o', label="Selling Points")
+    # plt.scatter(buy_idx, buy_value * 0.95, color='green', marker='o', label="Buying Points")
+    # plt.scatter(sell_idx, sell_value * 1.05, color='red', marker='o', label="Selling Points")
 
     ax.text(0.3, 0.95, "Net Worth after trading:" + str("%.2f" % money[len(money) - 1]) + "$", size=20, transform=ax.transAxes, bbox=dict(facecolor='blue', alpha=0.5))
     ax.text(0.3, 0.90,"Buy and Hold amount:" + str("%.2f" % buy_and_hold) + "$", transform=ax.transAxes, size= 20, bbox=dict(facecolor='red', alpha=0.5))
@@ -97,10 +97,10 @@ def buying_and_selling_plt(orig, pred, threshold_buy, threshold_sell, money_star
     # plt.ylim(0)  # sets the y axis min to zero
     # plt.xlim(0, 100)  # sets the y axis min to zero
     plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
-    plt.title('Ford test data')  # prints the title on the top
-    plt.ylabel('Stock Price For Ford')  # labels y axis
+    plt.title('SPCE test data', fontsize=15)  # prints the title on the top
+    plt.ylabel('Stock Price For SPCE',fontsize=10)  # labels y axis
     plt.xlabel('Date')  # labels x axis
-    plt.legend()
+    plt.legend(fontsize=15)
     plt.show()
 
 ## includes animation
@@ -115,8 +115,6 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
     bot_df['Date'] = orig['Date']
 
     fig, (ax1, ax2) = plt.subplots(2, 1)
-
-
     ax1.set_title('Money over time',  fontsize=18)
     ax1.set_xlabel('Minutes', fontsize=15)
     ax1.set_ylabel('Net worth in $', fontsize=15)
@@ -124,11 +122,20 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
 
     ax2.set_title('Stock over time', fontsize=18)
     ax2.set_ylabel('Stock Value in $', fontsize=15)
-    ax2.set_xlabel('Minutes', fontsize=15)
+
+    ax1.set_title('Money over time',fontsize=15)
+    ax1.set_xlabel('Minutes',fontsize=10)
+    ax1.set_ylabel('Net worth in $',fontsize=10)
+    ax1_text = ax1.text(0.3, 0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
+
+    ax2.set_title('Stock over time', fontsize=15)
+    ax2.set_ylabel('Stock Value in $', fontsize=10)
+    ax2.set_xlabel('Minutes', fontsize=10)
+
     ax2_text = ax2.text(0.3, -0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
     def update_money(i=int):
-        ax1.legend(["net worth"])
+        ax1.legend(["net worth"],fontsize=10)
         plt.sca(ax1)
         ax1_text.set_text("Current Net worth:" + "%.2f" % bot_df['Money'][i])
         # ax1.scatter(buy_idx[:i], buy_value[:i] , color='green', marker='o', label="Buying Points")
@@ -138,7 +145,7 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
         p[0].set_color('r')  # set the colour of each curve
 
     def update_stock(i=int):
-        ax2.legend(["Stock Value"])
+        ax2.legend(["Stock Value"],fontsize=10)
         plt.sca(ax2)
         ax2_text.set_text("Current Stock Value:" + "%.2f" % bot_df['Stock'][i])
         plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
@@ -158,6 +165,11 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
     animator = ani.FuncAnimation(fig, update_all, frames=frames , interval=40, repeat=False, blit=False)
     mng = plt.get_current_fig_manager()
     mng.full_screen_toggle()
+
+    # plt.rcParams["animation.convert_path"] = "C:\ProgramFiles\IImageMagick-7.1.0-Q16-HDRI\convert"
+    #
+    # animator.save(filename="gif.gif" , writer='imagemagick')
+
     plt.show()
 
 def outcome_of_transactions_plt(orig, pred, threshold_buy, threshold_sell, money_start):
@@ -188,10 +200,10 @@ def outcome_of_transactions_plt(orig, pred, threshold_buy, threshold_sell, money
 
     plt.grid(True)  # turns on axis grid
     plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
-    plt.title('Outcome of each buying and selling Desicion')  # prints the title on the top
-    plt.ylabel('Percent of positive/negative impact')  # labels y axis
-    plt.xlabel('Minutes')  # labels x axis
-    plt.legend()
+    plt.title('Outcome of each buying and selling Desicion', fontsize=15 )  # prints the title on the top
+    plt.ylabel('Percent of positive/negative impact', fontsize=15)  # labels y axis
+    plt.xlabel('Minutes',fontsize=15)  # labels x axis
+    plt.legend(fontsize=10)
     plt.show()
 
 
