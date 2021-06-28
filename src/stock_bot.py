@@ -5,7 +5,8 @@ import sys
 import pickle
 import matplotlib.pyplot as plt
 import matplotlib.animation as ani
-
+import matplotlib
+print(matplotlib.matplotlib_fname())
 warnings.filterwarnings('ignore')
 
 
@@ -116,14 +117,14 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
     fig, (ax1, ax2) = plt.subplots(2, 1)
 
 
-    ax1.set_title('Money over time')
-    ax1.set_xlabel('Minutes')
-    ax1.set_ylabel('Net worth in $')
+    ax1.set_title('Money over time',  fontsize=18)
+    ax1.set_xlabel('Minutes', fontsize=15)
+    ax1.set_ylabel('Net worth in $', fontsize=15)
     ax1_text = ax1.text(0.3, 0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
-    ax2.set_title('Stock over time')
-    ax2.set_ylabel('Stock Value in $')
-    ax2.set_xlabel('Minutes')
+    ax2.set_title('Stock over time', fontsize=18)
+    ax2.set_ylabel('Stock Value in $', fontsize=15)
+    ax2.set_xlabel('Minutes', fontsize=15)
     ax2_text = ax2.text(0.3, -0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
     def update_money(i=int):
@@ -155,8 +156,8 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
     frames = np.arange(0, len(bot_df)+ 1, show_every_x_frams)
     last_frame = frames[len(frames) - 1 ]
     animator = ani.FuncAnimation(fig, update_all, frames=frames , interval=40, repeat=False, blit=False)
-    # f = "./gif.gif"
-    # animator.save(f , writer='imagemagick', fps=30)
+    mng = plt.get_current_fig_manager()
+    mng.full_screen_toggle()
     plt.show()
 
 def outcome_of_transactions_plt(orig, pred, threshold_buy, threshold_sell, money_start):
