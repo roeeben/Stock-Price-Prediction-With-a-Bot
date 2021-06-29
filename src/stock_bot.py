@@ -114,8 +114,6 @@ def buying_and_selling_plt(orig, pred, threshold_buy, threshold_sell, money_star
     sell_value = sell_value[sell_value > 0]
 
     # buying and selling points
-    plt.plot(orig['Date'].index, test_orig.values, label="Original test data")  # plots the x and y
-    plt.plot(orig['Date'].index, test_pred.values, label="Predicted test data")
     ax = orig.plot(x='Date', y='Price', label="Original test data")
     pred.plot(x='Date', y='Price', label="Predicted test data", ax= ax)
     plt.scatter(buy_idx, buy_value * 0.95, color='green', marker='o', label="Buying Points")
@@ -126,11 +124,11 @@ def buying_and_selling_plt(orig, pred, threshold_buy, threshold_sell, money_star
     plt.grid(True)  # turns on axis grid
     # plt.ylim(0)  # sets the y axis min to zero
     # plt.xlim(0, 100)  # sets the y axis min to zero
-    plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
-    plt.title('SPCE test data', fontsize=15)  # prints the title on the top
-    plt.ylabel('Stock Price For SPCE',fontsize=10)  # labels y axis
+    plt.xticks(rotation=45, fontsize=18)  # rotates the x axis ticks 90 degress and font size 10
+    plt.title('CGEN test data', fontsize=18)  # prints the title on the top
+    plt.ylabel('Stock Price For SPCE',fontsize=18)  # labels y axis
     plt.xlabel('Date')  # labels x axis
-    plt.legend(fontsize=15)
+    plt.legend(fontsize=18)
     plt.show()
 
 ## includes animation
@@ -168,33 +166,33 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
     plt.subplots_adjust(left=left, bottom=bottom, right=right, top=top, wspace=wspace, hspace=hspace)
 
 
-    ax1.set_title('Money over time',  fontsize=15)
-    ax1.set_xlabel('Minutes', fontsize=15)
-    ax1.set_ylabel('Net worth in $', fontsize=15)
+    ax1.set_title('Money over time',  fontsize=18)
+    ax1.set_xlabel('Minutes', fontsize=18)
+    ax1.set_ylabel('Net worth in $', fontsize=18)
     ax1_text = ax1.text(0.3, 0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
-    ax2.set_title('Stock over time', fontsize=15)
-    ax2.set_xlabel('Minutes', fontsize=15)
-    ax2.set_ylabel('Stock Value in $', fontsize=15)
+    ax2.set_title('Stock over time', fontsize=18)
+    ax2.set_xlabel('Minutes', fontsize=18)
+    ax2.set_ylabel('Stock Value in $', fontsize=18)
     ax2_text = ax2.text(0.3, -0.8, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
     # updating each frame of money
     def update_money(i=int):
-        ax1.legend(["net worth"],fontsize=15)
+        ax1.legend(["net worth"],fontsize=18)
         plt.sca(ax1)
         ax1_text.set_text("Current Net worth:" + "%.2f" % bot_df['Money'][i])
         # ax1.scatter(buy_idx[:i], buy_value[:i] , color='green', marker='o', label="Buying Points")
         # ax1.scatter(sell_idx[:i], sell_value[:i] , color='red', marker='o', label="Selling Points")
-        plt.xticks(rotation=45, fontsize=15)  # rotates the x axis ticks 90 degress and font size 10
+        plt.xticks(rotation=45, fontsize=18)  # rotates the x axis ticks 90 degress and font size 18
         p = ax1.plot(bot_df['Date'].index[:i], bot_df['Money'][:i].values)  # note it only returns the dataset, up to the point i
         p[0].set_color('r')  # set the colour of each curve
 
     # updating each frame of stock value
     def update_stock(i=int):
-        ax2.legend(["Stock Value"],fontsize=15)
+        ax2.legend(["Stock Value"],fontsize=18)
         plt.sca(ax2)
         ax2_text.set_text("Current Stock Value:" + "%.2f" % bot_df['Stock'][i])
-        plt.xticks(rotation=45, fontsize=15)  # rotates the x axis ticks 90 degress and font size 10
+        plt.xticks(rotation=45, fontsize=18)  # rotates the x axis ticks 90 degress and font size 18
         p = ax2.plot(bot_df['Stock'][:i].index,  bot_df['Stock'][:i].values)  # note it only returns the dataset, up to the point i
 
         p[0].set_color('b')  # set the colour of each curve
@@ -206,7 +204,7 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
         update_stock(i)
 
     # for faster animation we show every 20 frame
-    show_every_x_frams = 20
+    show_every_x_frams = 40
     frames = np.arange(0, len(bot_df)+ 1, show_every_x_frams)
     last_frame = frames[len(frames) - 1 ]
     animator = ani.FuncAnimation(fig, update_all, frames=frames , interval=40, repeat=False, blit=False)
@@ -307,17 +305,17 @@ def money_for_threshold(orig, pred, money_start):
     plt.show()
 
 
-with open('SPCE_original.pkl', 'rb') as file:
-    SPCE_original = pickle.load(file)
-with open('SPCE_predict.pkl', 'rb') as file:
-    SPCE_predict = pickle.load(file)
+with open('../data/CGEN_original.pkl', 'rb') as file:
+    CGEN_original = pickle.load(file)
+with open('../data/CGEN_predict.pkl', 'rb') as file:
+    CGEN_predict = pickle.load(file)
 
-SPCE_original = SPCE_original[100:].reset_index()
-SPCE_predict = SPCE_predict[100:].reset_index()
+CGEN_original = CGEN_original[100:].reset_index()
+CGEN_predict = CGEN_predict[100:].reset_index()
 money_start = 5000
 threshold_buy = 0.0015
 threshold_sell = 0.0015
-buying_and_selling_plt(SPCE_original, SPCE_predict, threshold_buy, threshold_sell, money_start)
-outcome_of_transactions_plt(SPCE_original, SPCE_predict, threshold_buy, threshold_sell, money_start)
-money_over_time_plt(SPCE_original, SPCE_predict, threshold_buy, threshold_sell, money_start)
-money_for_threshold(SPCE_original, SPCE_predict, money_start)
+buying_and_selling_plt(CGEN_original, CGEN_predict, threshold_buy, threshold_sell, money_start)
+outcome_of_transactions_plt(CGEN_original, CGEN_predict, threshold_buy, threshold_sell, money_start)
+money_over_time_plt(CGEN_original, CGEN_predict, threshold_buy, threshold_sell, money_start)
+money_for_threshold(CGEN_original, CGEN_predict, money_start)
