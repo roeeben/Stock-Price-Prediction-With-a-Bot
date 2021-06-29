@@ -5,8 +5,8 @@ import pandas as pd
 
 
 def train_test_split(new_df, train_percentage, val_percentage):
-    # Preparation of train test and validation sets.
-    train_size = int(new_df.shape[0] * train_percentage)  # val size
+    # Preparation of train, test and validation sets.
+    train_size = int(new_df.shape[0] * train_percentage)
     val_size = int(new_df.shape[0] * val_percentage)
 
     data_x = new_df[:-1]
@@ -47,17 +47,18 @@ def add_technical_indicators(new_df, stock_df):
     edited_df['volume'] = stock_df['Volume']
     edited_df.head()
 
-    ema = TA.EMA(edited_df)
-    bb = TA.BBANDS(edited_df)
+    ema = TA.EMA(edited_df)  # using FINTA to add the indicators
+    bb = TA.BBANDS(edited_df) # using FINTA to add the indicators
 
     new_df['Exponential_moving_average'] = ema.copy()
 
     new_df = pd.concat([new_df, bb], axis=1)
 
     for i in range(19):
-        new_df['BB_MIDDLE'][i] = new_df.loc[i, 'Exponential_moving_average']
+        new_df['BB_MIDDLE'][i] = new_df.loc[i, 'Exponential_moving_average']  # using the exponential moving average, instead of SMA, for the middle part of the boilinger band
 
         if i != 0:
+            # for the upper and lower parts of the boilinger band we add and subtract the std
             higher = new_df.loc[i, 'BB_MIDDLE'] + 2 * new_df['Close'].rolling(i + 1).std()[i]
             lower = new_df.loc[i, 'BB_MIDDLE'] - 2 * new_df['Close'].rolling(i + 1).std()[i]
             new_df['BB_UPPER'][i] = higher
@@ -69,7 +70,7 @@ def add_technical_indicators(new_df, stock_df):
 
 
 def on_balance_volume_creation(stock_df):
-    # Adding of on balance volume to dataframe
+    # Adding 'on balance volume' indicator to the df
 
     new_df = pd.DataFrame({})
 
@@ -79,6 +80,8 @@ def on_balance_volume_creation(stock_df):
     tally = 0
 
     for i in range(1, len(new_df)):
+        # simple 'on balance volume' formula from investopedia.com
+        
         if (stock_df['Close'][i] > stock_df['Close'][i - 1]):
             tally += stock_df['Volume'][i]
         elif (stock_df['Close'][i] < stock_df['Close'][i - 1]):
@@ -92,9 +95,3 @@ def on_balance_volume_creation(stock_df):
     new_df['On_Balance_Volume'] = (new_df['On_Balance_Volume'] + 1).transform(np.log)
 
     return new_df
-
-if __name__ == '__main__':
-    train_split = 0.7
-
-    history_points = 21
-    X_train, y_train, X_test, y_test, y_reverse_normaliser = train_test_split_preparation(new_df2, train_split)

@@ -16,12 +16,12 @@ def train(model, criterion, optimizer, num_epochs, X_train, y_train, X_val, y_va
 
         hidden_train = None  # hidden state of the LSTM, must propagate through train, validation and test sequentially!
 
-        j = np.random.randint(0, leftover)  # random batch size so they overlap and we learn their connections
-        X_train_epoch = X_train[j:j + T*bs]
-        X_train_epoch = X_train_epoch.reshape((bs, T, -1))
+        j = np.random.randint(0, leftover)  # starting the batch from a random number so we find all of the connections and the batches overlap
+        X_train_epoch = X_train[j:j + T*bs] 
+        X_train_epoch = X_train_epoch.reshape((bs, T, -1))  # last dimension is features
 
         y_train_epoch = y_train[j:j+T*bs]
-        y_train_epoch = y_train_epoch.reshape((bs, T, -1))
+        y_train_epoch = y_train_epoch.reshape((bs, T, -1))  # last dimension is scalar (we want to fit the closing price)
 
         for i in range(0, T, bptt):
 
