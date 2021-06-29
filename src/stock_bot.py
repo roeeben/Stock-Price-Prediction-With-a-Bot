@@ -124,9 +124,9 @@ def buying_and_selling_plt(orig, pred, threshold_buy, threshold_sell, money_star
     plt.grid(True)  # turns on axis grid
     # plt.ylim(0)  # sets the y axis min to zero
     # plt.xlim(0, 100)  # sets the y axis min to zero
-    plt.xticks(rotation=45, fontsize=18)  # rotates the x axis ticks 90 degress and font size 10
+    plt.xticks(rotation=45, fontsize=16)  # rotates the x axis ticks 90 degress and font size 10
     plt.title('CGEN test data', fontsize=18)  # prints the title on the top
-    plt.ylabel('Stock Price For SPCE',fontsize=18)  # labels y axis
+    plt.ylabel('Stock Price For CGEN',fontsize=18)  # labels y axis
     plt.xlabel('Date')  # labels x axis
     plt.legend(fontsize=18)
     plt.show()
