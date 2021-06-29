@@ -157,42 +157,44 @@ def money_over_time_plt(orig, pred, threshold_buy, threshold_sell, money_start):
     bot_df['Date'] = orig['Date']
 
     fig, (ax1, ax2) = plt.subplots(2, 1)
-    ax1.set_title('Money over time',  fontsize=18)
+
+    left = 0.125  # the left side of the subplots of the figure
+    right = 0.9  # the right side of the subplots of the figure
+    bottom = 0.1  # the bottom of the subplots of the figure
+    top = 0.9  # the top of the subplots of the figure
+    wspace = 0.2  # the amount of width reserved for blank space between subplots
+    hspace = 0.5  # the amount of height reserved for white space between subplots
+
+    plt.subplots_adjust(left=left, bottom=bottom, right=right, top=top, wspace=wspace, hspace=hspace)
+
+
+    ax1.set_title('Money over time',  fontsize=15)
     ax1.set_xlabel('Minutes', fontsize=15)
     ax1.set_ylabel('Net worth in $', fontsize=15)
     ax1_text = ax1.text(0.3, 0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
-    ax2.set_title('Stock over time', fontsize=18)
-    ax2.set_ylabel('Stock Value in $', fontsize=15)
-
-    ax1.set_title('Money over time',fontsize=15)
-    ax1.set_xlabel('Minutes',fontsize=10)
-    ax1.set_ylabel('Net worth in $',fontsize=10)
-    ax1_text = ax1.text(0.3, 0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
-
     ax2.set_title('Stock over time', fontsize=15)
-    ax2.set_ylabel('Stock Value in $', fontsize=10)
-    ax2.set_xlabel('Minutes', fontsize=10)
-
-    ax2_text = ax2.text(0.3, -0.5, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
+    ax2.set_xlabel('Minutes', fontsize=15)
+    ax2.set_ylabel('Stock Value in $', fontsize=15)
+    ax2_text = ax2.text(0.3, -0.8, '', transform=ax1.transAxes, size=20, bbox=dict(facecolor='red', alpha=0.3))
 
     # updating each frame of money
     def update_money(i=int):
-        ax1.legend(["net worth"],fontsize=10)
+        ax1.legend(["net worth"],fontsize=15)
         plt.sca(ax1)
         ax1_text.set_text("Current Net worth:" + "%.2f" % bot_df['Money'][i])
         # ax1.scatter(buy_idx[:i], buy_value[:i] , color='green', marker='o', label="Buying Points")
         # ax1.scatter(sell_idx[:i], sell_value[:i] , color='red', marker='o', label="Selling Points")
-        plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
+        plt.xticks(rotation=45, fontsize=15)  # rotates the x axis ticks 90 degress and font size 10
         p = ax1.plot(bot_df['Date'].index[:i], bot_df['Money'][:i].values)  # note it only returns the dataset, up to the point i
         p[0].set_color('r')  # set the colour of each curve
 
     # updating each frame of stock value
     def update_stock(i=int):
-        ax2.legend(["Stock Value"],fontsize=10)
+        ax2.legend(["Stock Value"],fontsize=15)
         plt.sca(ax2)
         ax2_text.set_text("Current Stock Value:" + "%.2f" % bot_df['Stock'][i])
-        plt.xticks(rotation=45, fontsize=10)  # rotates the x axis ticks 90 degress and font size 10
+        plt.xticks(rotation=45, fontsize=15)  # rotates the x axis ticks 90 degress and font size 10
         p = ax2.plot(bot_df['Stock'][:i].index,  bot_df['Stock'][:i].values)  # note it only returns the dataset, up to the point i
 
         p[0].set_color('b')  # set the colour of each curve
