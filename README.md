@@ -7,7 +7,7 @@
     <a href="mailto:roeebs123@gmail.com">Roee Ben Shlomo</a>
   </p>
 
-In this small project we're predicting the price of a stock 1 minute into the future using an LSTM architecture thats feeds on parallel batches that overlap between different epochs in a randomized manner.
+In this small project we're predicting the price of a stock 1 minute into the future using an LSTM architecture that feeds on parallel batches that overlap between different epochs in a randomized manner.
 We proceed to use a simple bot that's given an initial stake of money to try and have a profit, in an environment where the Buy&Hold strategy won't suffice.
 More info down below.
 
