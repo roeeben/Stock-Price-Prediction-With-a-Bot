@@ -87,7 +87,7 @@ After training the model for the mentioned period, feeding the test data to get 
 
 In green we see the points in which the model buys, and in red: sells. 
 The bot has had 52% of successful trades, but we don't give this number too much thoughts since a trader can have a profit even with 10% successful trades, aslong as the losing trades don't lose as much as the winning trades gain.
-Overall, it was given 5000$ at the start of the simulation and finished with a value of 5204$, i.e. it gained 200$, which the Buy&Holder has lost 54$.
+Overall, it was given \$5000 at the start of the simulation and finished with a value of \$5204, i.e. it gained \$204, while the Buy&Holder has lost \$54.
 
 Up top we have the animation of the bot running in action on the test data, and if we freeze the animation at the end:
 
